@@ -49,7 +49,7 @@ public class ReadPersonServlet extends HttpServlet {
 
       System.out.println("Read Person");
 
-      req.setAttribute("collection", collections);
+      req.setAttribute("collections", collections);
       req.setAttribute("person", person);
       req.setAttribute("page", "view");
       req.getRequestDispatcher("/base.jsp").forward(req, resp);

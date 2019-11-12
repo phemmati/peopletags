@@ -43,17 +43,17 @@ Copyright 2016 Google Inc.
       </h4>
       <h5 class="person-last">${fn:escapeXml(not empty person.last?person.last:'Unknown')}</h5>
       <p class="person-description">${fn:escapeXml(person.description)}</p>
+      <p class="person-jobTitle">${fn:escapeXml(person.jobTitle)}</p>
       <small class="person-added-by">Added by
         ${fn:escapeXml(not empty person.createdBy?person.createdBy:'Anonymous')}</small>
     </div>
   </div>
 
-
   <c:forEach items="${collections}" var="collection">
   <div class="media">
     <a href="/readCollection?id=${collection.id}">
       <div class="media-left">
-        <img alt="ahhh" height="200"src="${fn:escapeXml(not empty collection.imageUrl?collection.imageUrl:'http://placekitten.com/g/128/192')}">
+        <img alt="ahhh" height="200" src="${fn:escapeXml(not empty collection.imageUrl?collection.imageUrl:'http://placekitten.com/g/128/192')}">
       </div>
       <div class="media-body">
         <h4>${fn:escapeXml(collection.name)}</h4>
