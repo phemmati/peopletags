@@ -15,10 +15,15 @@
 
 package com.example.getstarted.basicactions;
 
+import com.example.getstarted.daos.PersonDao;
+import com.example.getstarted.daos.PersonCollectionDao;
 import com.example.getstarted.daos.CollectionDao;
+import com.example.getstarted.objects.Person;
+import com.example.getstarted.objects.PersonCollectionAssociation;
 import com.example.getstarted.objects.Collection;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,8 +39,18 @@ public class ReadCollectionServlet extends HttpServlet {
       ServletException {
     Long id = Long.decode(req.getParameter("id"));
     CollectionDao collectionDao = (CollectionDao) this.getServletContext().getAttribute("collectionDao");
+    PersonCollectionDao personcollectiondao = (PersonCollectionDao) this.getServletContext().getAttribute("personcollectiondao");
+    List<Person> persons = null;
+
     try {
       Collection collection = collectionDao.readCollection(id);
+
+      persons = personcollectiondao.listPersons(id);
+      System.out.println(persons);
+
+      System.out.println("Read Collection");
+
+      req.setAttribute("persons", persons);
       req.setAttribute("collection", collection);
       req.setAttribute("page", "collectionView");
       req.getRequestDispatcher("/base.jsp").forward(req, resp);

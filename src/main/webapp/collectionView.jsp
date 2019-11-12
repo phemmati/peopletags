@@ -26,7 +26,7 @@ Copyright 2016 Google Inc.
 
     <a href="/associate?id=${collection.id}" class="btn btn-success btn-sm">
           <i class="glyphicon glyphicon-plus"></i>
-          Add Person
+          Add Person to Collection
         </a>
   </div>
 
@@ -43,5 +43,26 @@ Copyright 2016 Google Inc.
         ${fn:escapeXml(not empty collection.createdBy?collection.createdBy:'Anonymous')}</small>
     </div>
   </div>
+
+  <c:forEach items="${persons}" var="person">
+  <div class="media">
+    <a href="/read?id=${person.id}">
+      <div class="media-left">
+        <img alt="ahhh" height="200"src="${fn:escapeXml(not empty person.imageUrl?person.imageUrl:'http://placekitten.com/g/128/192')}">
+      </div>
+      <div class="media-body">
+        <h4 class="person-first">
+          ${fn:escapeXml(person.first)}
+        </h4>
+        <h5 class="person-last">${fn:escapeXml(not empty person.last?person.last:'Unknown')}</h5>
+        <p class="person-description">${fn:escapeXml(person.description)}</p>
+        <p class="person-jobTitle">${fn:escapeXml(person.jobTitle)}</p>
+        <small class="person-added-by">Added by
+          ${fn:escapeXml(not empty person.createdBy?person.createdBy:'Anonymous')}</small>
+      </div>
+    </a>
+  </div>
+  </c:forEach>
+
 </div>
 <!-- [END view] -->

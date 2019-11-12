@@ -107,18 +107,19 @@ public class PersonCollectionDatastoreDao implements PersonCollectionDao {
     Query query = new Query(PERSONCOLLECTION_KIND) // We only care about Persons
             // Only for this user
             .setFilter(new Query.FilterPredicate(
-                    PersonCollectionAssociation.COLLECTION_ID, Query.FilterOperator.EQUAL, collectionId))
+                    PersonCollectionAssociation.COLLECTION_ID, Query.FilterOperator.EQUAL, String.valueOf(collectionId)))
             // a custom datastore index is required since you are filtering by one property
             // but ordering by another
            .addSort(PersonCollectionAssociation.PERSON_ID, SortDirection.ASCENDING);
     PreparedQuery preparedQuery = datastore.prepare(query);
     QueryResultIterator<Entity> results = preparedQuery.asQueryResultIterator();
 
-    List<Person> resultPersonCollections = new ArrayList<>();
+    List<Person> persons = new ArrayList<>();
     while (results.hasNext()) {  // We still have data
-      System.out.println("done");      // Add the Person to the List
+      String id = String.valueOf((results.next()).getProperty(PersonCollectionAssociation.PERSON_ID));
+      persons.add(readPerson(Long.parseLong(id))); // Add the Person to the List
     }
-    return resultPersonCollections;
+    return persons;
 
   }
 
@@ -176,5 +177,29 @@ public class PersonCollectionDatastoreDao implements PersonCollectionDao {
   }
   // [END entityToPerson]
 
+  // [START read]
+  public Person readPerson(Long personId) {
+    try {
+      Entity personEntity = datastore.get(KeyFactory.createKey(PERSON_KIND, personId));
+      return entityToPerson(personEntity);
+    } catch (EntityNotFoundException e) {
+      return null;
+    }
+  }
+  // [END read]
+
+  // [START entityToPerson]
+  public Person entityToPerson(Entity entity) {
+    return new Person.Builder()                                     // Convert to Person form
+            .last((String) entity.getProperty(Person.LAST))
+            .jobTitle((String) entity.getProperty(Person.JOB_TITLE))
+            .id(entity.getKey().getId())
+            .imageUrl((String) entity.getProperty(Person.IMAGE_URL))
+            .createdBy((String) entity.getProperty(Person.CREATED_BY))
+            .createdById((String) entity.getProperty(Person.CREATED_BY_ID))
+            .first((String) entity.getProperty(Person.FIRST))
+            .description((String) entity.getProperty(Person.DESCRIPTION)).build();
+  }
+  // [END entityToPerson]
 }
 // [END example]
