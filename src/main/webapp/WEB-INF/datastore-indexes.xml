@@ -12,4 +12,8 @@
         <property name="personId" direction="asc"/>
         <property name="collectionId" direction="asc"/>
     </datastore-index>
+    <datastore-index kind="PersonCollection4" ancestor="false" source="manual">
+        <property name="collectionId" direction="asc"/>
+        <property name="personId" direction="asc"/>
+    </datastore-index>
 </datastore-indexes>
