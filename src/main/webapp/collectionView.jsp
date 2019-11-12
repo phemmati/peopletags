@@ -44,25 +44,27 @@ Copyright 2016 Google Inc.
     </div>
   </div>
 
-  <c:forEach items="${persons}" var="person">
-  <div class="media">
-    <a href="/read?id=${person.id}">
-      <div class="media-left">
-        <img alt="ahhh" height="200"src="${fn:escapeXml(not empty person.imageUrl?person.imageUrl:'http://placekitten.com/g/128/192')}">
-      </div>
-      <div class="media-body">
-        <h4 class="person-first">
-          ${fn:escapeXml(person.first)}
-        </h4>
-        <h5 class="person-last">${fn:escapeXml(not empty person.last?person.last:'Unknown')}</h5>
-        <p class="person-description">${fn:escapeXml(person.description)}</p>
-        <p class="person-jobTitle">${fn:escapeXml(person.jobTitle)}</p>
-        <small class="person-added-by">Added by
-          ${fn:escapeXml(not empty person.createdBy?person.createdBy:'Anonymous')}</small>
-      </div>
-    </a>
+  <div style="display: grid; grid-template-columns: 300px 300px 300px;">
+    <c:forEach items="${persons}" var="person">
+    <div class="media" style="border: 1px solid #666">
+      <a href="/read?id=${person.id}">
+        <div class="media-left">
+          <img alt="ahhh" height="200"src="${fn:escapeXml(not empty person.imageUrl?person.imageUrl:'http://placekitten.com/g/128/192')}">
+        </div>
+        <div class="media-body">
+          <h4 class="person-first">
+            ${fn:escapeXml(person.first)}
+          </h4>
+          <h5 class="person-last">${fn:escapeXml(not empty person.last?person.last:'Unknown')}</h5>
+          <p class="person-description">${fn:escapeXml(person.description)}</p>
+          <p class="person-jobTitle">${fn:escapeXml(person.jobTitle)}</p>
+          <small class="person-added-by">Added by
+            ${fn:escapeXml(not empty person.createdBy?person.createdBy:'Anonymous')}</small>
+        </div>
+      </a>
+    </div>
+    </c:forEach>
   </div>
-  </c:forEach>
 
 </div>
 <!-- [END view] -->
